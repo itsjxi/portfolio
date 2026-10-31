@@ -1,3 +1,15 @@
+// ─── Auto-updating experience calculator ───────────────────────────────────
+// Pass the date you started your first professional job.
+// The returned string (e.g. "4+ yrs") increments automatically each year.
+export function getExperience(startDate = '2021-08-01') {
+  const start = new Date(startDate);
+  const today = new Date();
+  let years = today.getFullYear() - start.getFullYear();
+  const anniversary = new Date(today.getFullYear(), start.getMonth(), start.getDate());
+  if (today < anniversary) years--;
+  return `${years}+ yrs`;
+}
+
 export const PERSON = {
   name: 'Jugal Rajput',
   title: 'Software Developer, Frontend',
@@ -9,11 +21,11 @@ export const PERSON = {
   linkedin: 'https://www.linkedin.com/in/jugal-rajput-39bbbb144/',
   resume: '/images/JUGAL_RAJPUT__Resume.pdf',
   tagline: 'I engineer interfaces that think.',
-  bio: 'Frontend engineer with 4+ years building AI-powered marketing tools, real-time dashboards, and design systems at scale. Currently at WebEngage, where I ship products used by thousands of enterprise marketers daily.',
+  bio: `Frontend engineer with ${getExperience()} building AI-powered marketing tools, real-time dashboards, and design systems at scale. Currently at WebEngage, where I ship products used by thousands of enterprise marketers daily.`,
 };
 
 export const METRICS = [
-  { value: '4+', label: 'Years of craft' },
+  { value: getExperience(), label: 'Years of craft' },
   { value: '12+', label: 'Core modules shipped' },
   { value: '70%', label: 'Faster content creation' },
   { value: '50%', label: 'Config latency reduced' },
@@ -141,6 +153,30 @@ export const EXPERIENCE = [
 
 export const PROJECTS = [
   {
+    id: 'vibemusic',
+    title: 'Vibe Music',
+    subtitle: 'Streaming App',
+    desc: 'Spotify-inspired music streaming app with playlist management, music discovery, and audio controls.',
+    image: '/images/vibeMusic.png',
+    github: 'https://github.com/itsjxi/SpotifyClone023',
+    demo: 'https://vibes-stream.netlify.app/',
+    tags: ['React', 'Spotify API', 'CSS3'],
+    featured: false,
+    year: '2023',
+  },
+    {
+    id: 'hulk',
+    title: 'Hulk Fashion',
+    subtitle: 'E-Commerce Store',
+    desc: 'Fashion e-commerce platform with product catalog, shopping cart, wishlist management, and responsive design.',
+    image: '/images/hulkApp.png',
+    github: 'https://github.com/itsjxi/HulkApps23',
+    demo: 'https://hulkappecoomerce.netlify.app/',
+    tags: ['React', 'Redux', 'JavaScript'],
+    featured: false,
+    year: '2023',
+  },
+  {
     id: 'quickkart',
     title: 'QuickKart',
     subtitle: 'Grocery Delivery Platform',
@@ -164,30 +200,7 @@ export const PROJECTS = [
     featured: true,
     year: '2023',
   },
-  {
-    id: 'vibemusic',
-    title: 'Vibe Music',
-    subtitle: 'Streaming App',
-    desc: 'Spotify-inspired music streaming app with playlist management, music discovery, and audio controls.',
-    image: '/images/vibeMusic.png',
-    github: 'https://github.com/itsjxi/SpotifyClone023',
-    demo: 'https://vibes-stream.netlify.app/',
-    tags: ['React', 'Spotify API', 'CSS3'],
-    featured: false,
-    year: '2023',
-  },
-  {
-    id: 'hulk',
-    title: 'Hulk Fashion',
-    subtitle: 'E-Commerce Store',
-    desc: 'Fashion e-commerce platform with product catalog, shopping cart, wishlist management, and responsive design.',
-    image: '/images/hulkApp.png',
-    github: 'https://github.com/itsjxi/HulkApps23',
-    demo: 'https://hulkappecoomerce.netlify.app/',
-    tags: ['React', 'Redux', 'JavaScript'],
-    featured: false,
-    year: '2023',
-  },
+
   {
     id: 'chilflix',
     title: 'ChilFlix',

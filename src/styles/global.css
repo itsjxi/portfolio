@@ -170,14 +170,31 @@ ul { list-style: none; }
 @media (max-width: 768px) {
   :root { --nav-width: 0px; }
   .cursor-dot, .cursor-ring { display: none; }
-  .main-content { margin-left: 0; padding-bottom: 80px; }
+
+  /* Push all content above the 64px fixed bottom nav.
+     calc() adds the iOS home-indicator safe area on top of that
+     so nothing is hidden on notched phones either. */
+  .main-content {
+    margin-left: 0;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+
   .section { padding: 64px 20px; }
+
+  /* Last section needs extra room so its footer clears the nav */
+  .section:last-child {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  }
+
   .section-title { margin-bottom: 12px; }
   .section-subtitle { font-size: 16px; line-height: 1.6; }
 }
 
 @media (max-width: 480px) {
   .section { padding: 48px 16px; }
+  .section:last-child {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  }
   .section-eyebrow { font-size: 10px; margin-bottom: 12px; }
   .section-eyebrow::before { width: 20px; }
 }

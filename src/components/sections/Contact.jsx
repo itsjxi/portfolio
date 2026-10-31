@@ -118,8 +118,9 @@ export default function Contact() {
         >
           <div className="form-row">
             <div className="form-field">
-              <label className="form-label">Name</label>
+              <label className="form-label" htmlFor="contact-name">Name</label>
               <input
+                id="contact-name"
                 type="text"
                 name="user_name"
                 required
@@ -130,8 +131,9 @@ export default function Contact() {
               {errors.user_name && <span className="field-error">{errors.user_name}</span>}
             </div>
             <div className="form-field">
-              <label className="form-label">Email</label>
+              <label className="form-label" htmlFor="contact-email">Email</label>
               <input
+                id="contact-email"
                 type="email"
                 name="user_email"
                 required
@@ -143,8 +145,9 @@ export default function Contact() {
             </div>
           </div>
           <div className="form-field">
-            <label className="form-label">Message</label>
+            <label className="form-label" htmlFor="contact-message">Message</label>
             <textarea
+              id="contact-message"
               name="message"
               required
               className={`form-textarea ${errors.message ? 'input-error' : ''}`}

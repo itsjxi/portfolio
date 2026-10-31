@@ -5,6 +5,7 @@ import Experience from './components/sections/Experience.jsx';
 import Projects from './components/sections/Projects.jsx';
 import Skills from './components/sections/Skills.jsx';
 import Contact from './components/sections/Contact.jsx';
+import PerfPanel from './components/PerfPanel.jsx';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -49,6 +50,9 @@ export default function App() {
 
       {/* Grain overlay */}
       <div className="grain" aria-hidden="true" />
+
+      {/* Keep diagnostics out of the public production portfolio. */}
+      {import.meta.env.DEV && <PerfPanel />}
     </>
   );
 }
