@@ -66,6 +66,27 @@
   border-bottom: 1px solid var(--border);
 }
 
+.exp-companyline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.exp-type {
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--ink-faint);
+  font-size: 9px;
+}
+
 .exp-role { font-size: 24px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
 .exp-summary { font-size: 15px; color: var(--ink-muted); max-width: 480px; line-height: 1.6; }
 
@@ -161,6 +182,7 @@
   .exp-tab-company { font-size: 13px; }
   .exp-tab-role { font-size: 11px; }
   .exp-role { font-size: 20px; }
+  .exp-companyline { font-size: 10px; }
   .exp-summary { font-size: 14px; }
   .exp-stack { max-width: 100%; }
   .exp-grid { grid-template-columns: 1fr; gap: 12px; }

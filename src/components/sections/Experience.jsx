@@ -12,10 +12,10 @@ export default function Experience() {
   return (
     <section id="experience" className="section exp-section">
       <div ref={ref} className="reveal-up">
-        <p className="section-eyebrow">Experience</p>
-        <h2 className="section-title">Where I've shipped</h2>
+        <p className="section-eyebrow">Career · 2021—Now</p>
+        <h2 className="section-title">From operations to AI-powered products</h2>
         <p className="section-subtitle">
-          Building performant, accessible, and scalable frontend systems that power real product value.
+          I turn complex workflows into useful tools—from manufacturing operations to enterprise marketing platforms.
         </p>
       </div>
 
@@ -27,6 +27,7 @@ export default function Experience() {
               key={exp.id}
               className={`exp-tab ${active === i ? 'active' : ''}`}
               onClick={() => setActive(i)}
+              aria-pressed={active === i}
               data-cursor
             >
               <img src={exp.logo} alt={exp.company} className="exp-tab-logo" />
@@ -47,6 +48,8 @@ export default function Experience() {
           <motion.div
             key={current.id}
             className="exp-content"
+            role="region"
+            aria-label={`${current.company} experience`}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
@@ -54,6 +57,10 @@ export default function Experience() {
           >
             <div className="exp-content-header">
               <div>
+                <p className="exp-companyline">
+                  {current.company}<span aria-hidden="true"> · </span>{current.period}
+                  <span className="exp-type">{current.type}</span>
+                </p>
                 <h3 className="exp-role">{current.role}</h3>
                 <p className="exp-summary">{current.summary}</p>
               </div>

@@ -1,13 +1,13 @@
 // ─── Auto-updating experience calculator ───────────────────────────────────
 // Pass the date you started your first professional job.
-// The returned string (e.g. "4+ yrs") increments automatically each year.
+// The returned count (e.g. "4+") increments automatically each year.
 export function getExperience(startDate = '2021-08-01') {
   const start = new Date(startDate);
   const today = new Date();
   let years = today.getFullYear() - start.getFullYear();
   const anniversary = new Date(today.getFullYear(), start.getMonth(), start.getDate());
   if (today < anniversary) years--;
-  return `${years}+ yrs`;
+  return `${years}+`;
 }
 
 export const PERSON = {
@@ -21,14 +21,14 @@ export const PERSON = {
   linkedin: 'https://www.linkedin.com/in/jugal-rajput-39bbbb144/',
   resume: '/images/JUGAL_RAJPUT__Resume.pdf',
   tagline: 'I engineer interfaces that think.',
-  bio: `Frontend engineer with ${getExperience()} building AI-powered marketing tools, real-time dashboards, and design systems at scale. Currently at WebEngage, where I ship products used by thousands of enterprise marketers daily.`,
+  bio: 'Frontend engineer building AI-powered marketing tools, real-time dashboards, and design systems at scale. Currently at WebEngage, where I ship products used by thousands of enterprise marketers daily.',
 };
 
 export const METRICS = [
-  { value: getExperience(), label: 'Years of craft' },
-  { value: '12+', label: 'Core modules shipped' },
+  { value: getExperience(), label: 'Years of experience' },
+  { value: '12+', label: 'Modules shipped' },
   { value: '70%', label: 'Faster content creation' },
-  { value: '50%', label: 'Config latency reduced' },
+  { value: '50%', label: 'Fewer config steps' },
 ];
 
 export const EXPERIENCE = [

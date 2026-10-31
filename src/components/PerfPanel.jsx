@@ -84,7 +84,7 @@ function Row({ label, value, ratingKey }) {
       <span className="perf-row-label">{label}</span>
       <span className={`perf-row-value ${r ? `perf-${r}` : ''}`}>
         {value ?? <span className="perf-na">n/a</span>}
-        {r && <span className={`perf-badge perf-badge--${r}`}>{r === 'needs-improvement' ? 'ok' : r}</span>}
+        {r && <span className={`perf-badge perf-badge--${r}`}>{r === 'needs-improvement' ? 'needs improvement' : r}</span>}
       </span>
     </div>
   );
@@ -240,7 +240,7 @@ export default function PerfPanel() {
               </Group>
 
               {/* Paint & Loading */}
-              <Group title="Paint &amp; Loading">
+              <Group title="Paint & Loading">
                 <Row label="First Paint (FP)"          value={m ? ms(m.fp)            : null} ratingKey={null} />
                 <Row label="First Contentful Paint"    value={m ? ms(m.fcp)           : null} ratingKey="fcp" />
                 <Row label="Time to First Byte (TTFB)" value={m ? ms(m.ttfb)          : null} ratingKey="ttfb" />

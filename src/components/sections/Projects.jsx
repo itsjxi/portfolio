@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Navigation, Autoplay } from 'swiper/modules';
+import { EffectCoverflow, Navigation, Keyboard } from 'swiper/modules';
 import { ExternalLink, Code2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PROJECTS } from '../../data/content.js';
 import { useReveal } from '../../hooks/useReveal.js';
@@ -28,14 +28,15 @@ export default function Projects() {
       {/* 3D Carousel */}
       <div className="carousel-container">
         <Swiper
-          modules={[EffectCoverflow, Navigation, Autoplay]}
+          modules={[EffectCoverflow, Navigation, Keyboard]}
           effect="coverflow"
           grabCursor
           centeredSlides
           slidesPerView="auto"
           loop
           speed={800}
-          autoplay={{ delay: 4000, disableOnInteraction: true, pauseOnMouseEnter: true }}
+          slideToClickedSlide
+          keyboard={{ enabled: true, onlyInViewport: true }}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,
@@ -43,12 +44,16 @@ export default function Projects() {
             modifier: 2,
             slideShadows: false,
           }}
-          onSwiper={(swiper) => { swiperRef.current = swiper; }}
+          onSwiper={(swiper) => { swiperRef.current = swiper; setActiveIndex(swiper.realIndex); }}
           onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
           className="projects-swiper"
         >
           {PROJECTS.map((project, i) => (
-            <SwiperSlide key={project.id} className="project-slide">
+            <SwiperSlide
+              key={project.id}
+              className="project-slide"
+              onClick={() => swiperRef.current?.slideToLoop(i)}
+            >
               <div className="slide-card">
                 <div className="slide-image-wrap">
                   <img src={project.image} alt={project.title} className="slide-image" />
