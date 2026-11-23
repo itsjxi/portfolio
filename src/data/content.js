@@ -154,7 +154,7 @@ export const EXPERIENCE = [
 export const PROJECTS = [
   {
     id: 'vibemusic',
-    title: 'Vibe Music',
+    title: 'Kinetic',
     subtitle: 'Streaming App',
     desc: 'Spotify-inspired music streaming app with playlist management, music discovery, and audio controls.',
     image: '/images/vibeMusic.png',
