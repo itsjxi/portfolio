@@ -1,223 +1,230 @@
-// ─── Auto-updating experience calculator ───────────────────────────────────
-// Pass the date you started your first professional job.
-// The returned count (e.g. "4+") increments automatically each year.
-export function getExperience(startDate = '2021-08-01') {
+// Years since the first full-time role. Updates itself every August.
+export function yearsSince(startDate = '2021-08-01') {
   const start = new Date(startDate);
   const today = new Date();
   let years = today.getFullYear() - start.getFullYear();
   const anniversary = new Date(today.getFullYear(), start.getMonth(), start.getDate());
   if (today < anniversary) years--;
-  return `${years}+`;
+  return years;
 }
 
 export const PERSON = {
   name: 'Jugal Rajput',
-  title: 'Software Developer, Frontend',
+  role: 'Frontend engineer',
   company: 'WebEngage',
   location: 'India',
   email: 'jugalrajput10@gmail.com',
-  phone: '+91 98972 56740',
   github: 'https://github.com/itsjxi',
   linkedin: 'https://www.linkedin.com/in/jugal-rajput-39bbbb144/',
-  resume: '/images/JUGAL_RAJPUT__Resume.pdf',
-  tagline: 'I engineer interfaces that think.',
-  bio: 'Frontend engineer building AI-powered marketing tools, real-time dashboards, and design systems at scale. Currently at WebEngage, where I ship products used by thousands of enterprise marketers daily.',
+  resume: '/Jugal_Rajput_Resume.pdf',
 };
 
-export const METRICS = [
-  { value: getExperience(), label: 'Years of experience' },
-  { value: '12+', label: 'Modules shipped' },
-  { value: '70%', label: 'Faster content creation' },
-  { value: '50%', label: 'Fewer config steps' },
+export const PROJECTS = [
+  {
+    id: 'data-grid',
+    title: 'Vanilla Data Grid',
+    kind: 'Open-source component',
+    summary:
+      'A dependency-free TypeScript data grid that sorts and searches a million rows without freezing the page.',
+    image: '/work/data-grid.webp',
+    alt: 'Vanilla Data Grid showing 1,000,000 rows filtered to "engineer", sorted by salary, with three rows selected.',
+    url: 'vanilla-data-grid.netlify.app',
+    demo: 'https://vanilla-data-grid.netlify.app/',
+    github: 'https://github.com/itsjxi/vanilla-data-grid',
+    tint: '#E8EEFF',
+    ink: '#2F55D4',
+    stats: [
+      { value: '6.6 ms', label: 'search across 1M rows' },
+      { value: '~30', label: 'row elements in the DOM' },
+      { value: '0', label: 'axe violations' },
+    ],
+    points: [
+      'Sorting and search run in a Web Worker on dictionary-encoded columns, so typing never blocks a frame.',
+      'Virtual scrolling recycles ~30 rows and compresses the scrollbar past the browser height cap.',
+      'Follows the WAI-ARIA grid pattern: full keyboard support, live announcements, selection that survives sorting.',
+    ],
+    stack: 'TypeScript, Web Workers, Vitest',
+  },
+  {
+    id: 'scratch',
+    title: 'Scratch Visual Editor',
+    kind: 'Visual programming tool',
+    summary:
+      'A block-based editor in the style of Scratch: drag blocks into scripts, press Run, and watch sprites move, talk and collide.',
+    image: '/work/scratch-editor.webp',
+    alt: 'Scratch Visual Editor running a script: the active stack glows and the cat says "Watch this!"',
+    url: 'scratchanimation.netlify.app',
+    demo: 'https://scratchanimation.netlify.app/',
+    github: 'https://github.com/itsjxi/scratch-visual-editor',
+    tint: '#FFF3D6',
+    ink: '#9A6A00',
+    stats: [
+      { value: '17', label: 'blocks with Scratch rules' },
+      { value: '43', label: 'unit and end-to-end tests' },
+      { value: '100%', label: 'of edits undoable' },
+    ],
+    points: [
+      'A generator-based interpreter runs scripts side by side, one step per frame, so a runaway loop can’t freeze the tab.',
+      'The program is an immutable tree: undo is a stack of snapshots, and unchanged blocks skip re-rendering.',
+      'Pointer-event drag and drop works with mouse, touch and pen, and every action has a keyboard equivalent.',
+    ],
+    stack: 'React 18, TypeScript, Playwright',
+  },
+  {
+    id: 'focusspace',
+    title: 'FocusSpace',
+    kind: 'Full-stack productivity app',
+    summary:
+      'A multi-user app for planning the day, running focus sessions, tracking habits and reviewing the week.',
+    image: '/work/focusspace.webp',
+    alt: 'FocusSpace dashboard with weight, discipline, streak and deep-work cards above three 30-day trend charts.',
+    url: 'focusspace-personal-productivity.netlify.app',
+    demo: 'https://focusspace-personal-productivity.netlify.app/',
+    github: 'https://github.com/itsjxi/focusspace',
+    tint: '#E6F0FF',
+    ink: '#2563EB',
+    stats: [
+      { value: '10', label: 'product modules' },
+      { value: '1 click', label: 'private demo account' },
+      { value: '32', label: 'API tests' },
+    ],
+    points: [
+      'Sign-up and sign-in with hashed passwords, httpOnly session cookies, login lockout and CSRF checks.',
+      'Each visitor can open a disposable demo account filled with 45 days of realistic history.',
+      'Charts read from a server-side aggregation endpoint, so the client never downloads raw history.',
+    ],
+    stack: 'React 19, FastAPI, SQLite',
+  },
+  {
+    id: 'kinetic',
+    title: 'Kinetic',
+    kind: 'Music app on the Spotify API',
+    summary:
+      'Sign in with Spotify to browse your own playlists, liked songs and top artists, or try it instantly in demo mode.',
+    image: '/work/kinetic.webp',
+    alt: 'Kinetic home screen with recommendations, top artists, top albums and recent playlists.',
+    url: 'kinetic-music.netlify.app',
+    demo: 'https://kinetic-music.netlify.app/',
+    github: 'https://github.com/itsjxi/vibe-music',
+    tint: '#FFE9E0',
+    ink: '#D9430F',
+    stats: [
+      { value: 'PKCE', label: 'OAuth in the browser' },
+      { value: '0', label: 'backend servers' },
+      { value: '2', label: 'data sources, one hook' },
+    ],
+    points: [
+      'OAuth 2.0 with PKCE entirely in the browser, with token refresh shared across concurrent requests.',
+      'One hook serves either the user’s Spotify library or demo data in the same shape, so pages never branch.',
+      'Library sections load independently, so one failing endpoint leaves a gap instead of an error screen.',
+    ],
+    stack: 'React, Redux Toolkit, Spotify Web API',
+  },
+];
+
+export const MORE_PROJECTS = [
+  {
+    title: 'QuickKart',
+    desc: 'A quick-commerce grocery store in vanilla JavaScript (MVC) with undoable cart edits and stock-limit hints.',
+    github: 'https://github.com/itsjxi/quickkart',
+  },
+  {
+    title: 'ChillFlix',
+    desc: 'A movie discovery app with TanStack Query prefetching, fuzzy ⌘K search and taste-based recommendations.',
+    github: 'https://github.com/itsjxi/chillflix',
+  },
 ];
 
 export const EXPERIENCE = [
   {
-    id: 'webengage',
     company: 'WebEngage',
-    role: 'SDE — Frontend',
-    type: 'Full-time',
-    period: 'Apr 2024 – Present',
-    logo: '/images/webengage.svg',
-    color: '#0072e3',
-    summary: 'Building AI-powered campaign orchestration tools, template builders, and real-time performance dashboards for enterprise marketing teams.',
-    stack: ['React', 'TypeScript', 'Redux', 'Ant Design', 'Highcharts', 'Konva', 'Nunjucks'],
+    role: 'Software Engineer, Frontend',
+    period: 'Mar 2024 – now',
+    summary:
+      'Frontend for a customer-engagement and marketing-automation platform: messaging channels first, and since mid-2025 the AI features.',
     work: [
-      {
-        title: 'AI Image Editor & Generation Suite',
-        desc: 'Unified canvas combining AI generation, text overlay, cropping, and mask drawing with full undo/redo history on a Konva-based canvas.',
-        metric: '70% faster content creation',
-        tags: ['React', 'Konva', 'OpenAI API', 'Context API'],
-      },
-      {
-        title: 'WhatsApp Template Builder',
-        desc: 'Modular builder with dynamic validation, personalization tokens, media support, and interactive element configuration.',
-        metric: '50% fewer config steps',
-        tags: ['React', 'Nunjucks', 'Redux', 'Ant Design'],
-      },
-      {
-        title: 'WhatsApp Carousel Builder',
-        desc: 'Drag-and-drop carousel replicating native WhatsApp format with image, text, and CTA button configuration with instant preview.',
-        metric: '40% faster campaign creation',
-        tags: ['React', 'Ant Design', 'Redux'],
-      },
-      {
-        title: 'Control Room Dashboard',
-        desc: 'Real-time performance monitoring for AI-driven campaigns with chart modals for throttled, retried, and backlog message visualization.',
-        metric: 'Faster issue diagnosis',
-        tags: ['React', 'Highcharts', 'Ant Design'],
-      },
-      {
-        title: 'Template Validation Framework',
-        desc: 'Robust validation layer for nested WhatsApp template structures ensuring compliance and correctness before submission.',
-        metric: '35% fewer rejections',
-        tags: ['React', 'TypeScript', 'Ant Design'],
-      },
-      {
-        title: 'Dynamic Personalization Engine',
-        desc: 'Real-time personalization injectors using Nunjucks to dynamically fetch and render customer-specific data inside campaign previews.',
-        metric: '30% less human error',
-        tags: ['React', 'Nunjucks', 'Handlebars', 'Redux'],
-      },
+      { title: 'AI image studio', desc: 'Built from scratch: generate, edit, crop and add text on one canvas, with full undo history.', metric: '70% faster content creation' },
+      { title: 'AI content agents', desc: 'Chat agents that write WhatsApp, RCS, push, SMS and email content straight into each editor.', metric: '5 channels, one flow' },
+      { title: 'Shared AI chat component', desc: 'One chat panel with clarifications, credits and feedback, maintained and improved for every agent.', metric: 'Used by 5 AI agents' },
+      { title: 'Customer-insights module', desc: 'Main frontend developer: personas, attributes, dashboards and playbooks.', metric: 'Shipped in 3 months' },
     ],
+    more: [
+      { title: 'AI images in every editor', desc: 'The image studio embedded in email, in-app, on-site, push, web push, WhatsApp and RCS.', metric: '7 message editors' },
+      { title: 'WhatsApp template builder', desc: 'Mixed buttons and multi-card carousels with a live phone preview.', metric: '50% fewer setup steps' },
+      { title: 'Template approval workflow', desc: 'Create, validate, submit and track WhatsApp templates without leaving the product.', metric: '35% fewer rejections' },
+      { title: 'Personalisation token picker', desc: 'Fallbacks, catalogs and custom entities that always generate valid syntax.', metric: '30% less human error' },
+      { title: 'Ad audience export', desc: 'Customer segments sent to TikTok and LinkedIn through one reusable export flow.', metric: '2 ad platforms' },
+      { title: 'Campaign analytics', desc: 'Per-button clicks, delivery-delay charts and funnel insights inside each campaign.' },
+    ],
+    stack: 'React, JavaScript, Redux, react-konva, Highcharts, Ant Design, BeeFree SDK',
   },
   {
-    id: 'alendei',
     company: 'Alendei Platforms Pvt. Ltd.',
-    role: 'Software Engineer — API Integration',
-    type: 'Full-time',
-    period: 'Nov 2023 – Mar 2024',
-    logo: '/images/alendei.svg',
-    color: '#25D366',
-    summary: 'Integrated APIs and configured campaign flows for a WhatsApp-based customer engagement platform, bridging business requirements into targeted communication workflows.',
-    stack: ['WhatsApp API', 'REST APIs', 'HTML Email', 'CSS', 'Campaign Automation'],
+    role: 'Software Engineer, API Integration Specialist',
+    period: 'Nov 2023 – Feb 2024',
+    summary:
+      'Turned client requirements into WhatsApp and email campaign flows, and fixed the integrations behind them.',
     work: [
-      {
-        title: 'WhatsApp Campaign API Integration',
-        desc: 'Integrated business APIs into a WhatsApp-based campaign platform, translating complex business requirements into configurable customer engagement workflows.',
-        metric: 'End-to-end automation',
-        tags: ['WhatsApp API', 'REST APIs', 'Campaign Flows'],
-      },
-      {
-        title: 'Campaign Flow Configuration',
-        desc: 'Configured campaign flows with conditions, triggers, and messaging logic for targeted customer communication across multiple client accounts.',
-        metric: 'Multi-client deployments',
-        tags: ['Workflow Automation', 'Triggers', 'Messaging Logic'],
-      },
-      {
-        title: 'Email Campaign Workflows & Templates',
-        desc: 'Built responsive HTML email templates and configured email campaign workflows tailored to individual customer specifications.',
-        metric: 'Responsive across clients',
-        tags: ['HTML Email', 'CSS', 'Email Campaigns'],
-      },
-      {
-        title: 'API Troubleshooting & Debugging',
-        desc: 'Diagnosed and resolved API integration and campaign-flow issues, collaborating with internal teams to identify root causes and ship fixes quickly.',
-        metric: 'Reduced integration errors',
-        tags: ['Debugging', 'API Integration', 'Cross-team Collaboration'],
-      },
+      { title: 'Campaign flows', desc: 'Triggers, conditions and messaging logic configured for several client accounts.' },
+      { title: 'Email templates', desc: 'Responsive HTML emails that render consistently across mail clients.' },
     ],
+    stack: 'REST APIs, WhatsApp Business API, HTML email',
   },
   {
-    id: 'aarti',
     company: 'Aarti Industries',
-    role: 'Executive — Digitalization',
-    type: 'Full-time',
+    role: 'Engineer',
     period: 'Sep 2021 – Oct 2023',
-    logo: '/images/aarti.svg',
-    color: '#34c38f',
-    summary: 'Led frontend digitalization for manufacturing operations — inventory systems, procurement dashboards, and internal tooling.',
-    stack: ['React', 'JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
+    summary:
+      'Built internal tools for a manufacturing business: inventory, procurement and warehouse operations.',
     work: [
-      {
-        title: 'Inventory Visualizer',
-        desc: 'Bar chart-based inventory visualizations for order history tracking and warehouse management.',
-        metric: '50% less manual reporting',
-        tags: ['React', 'Chart.js'],
-      },
-      {
-        title: 'Material Issuance UI',
-        desc: 'Refactored internal material issuance interface for faster warehouse operations.',
-        metric: '40% faster operations',
-        tags: ['React', 'CSS'],
-      },
-      {
-        title: 'Negotiation Dashboard',
-        desc: 'Procurement dashboards enabling data-driven vendor negotiations with real-time pricing data.',
-        metric: '15% cost reduction',
-        tags: ['React', 'Data Visualization'],
-      },
+      { title: 'Inventory workflows', desc: 'Inventory and material-issuance workflows moved from paper and spreadsheets into React.', metric: '30% more efficient' },
+      { title: 'Negotiation dashboard', desc: 'Pricing data in front of buyers during vendor negotiations.', metric: '~20% cost reduction' },
     ],
+    stack: 'React, JavaScript, Chart.js',
   },
 ];
 
-export const PROJECTS = [
-  {
-    id: 'vibemusic',
-    title: 'Kinetic',
-    subtitle: 'Streaming App',
-    desc: 'Spotify-inspired music streaming app with playlist management, music discovery, and audio controls.',
-    image: '/images/vibeMusic.png',
-    github: 'https://github.com/itsjxi/SpotifyClone023',
-    demo: 'https://vibes-stream.netlify.app/',
-    tags: ['React', 'Spotify API', 'CSS3'],
-    featured: false,
-    year: '2023',
-  },
+export const TOOLKIT = [
+  { group: 'Build', items: ['React', 'JavaScript', 'TypeScript', 'HTML & CSS', 'Tailwind CSS', 'Ant Design'] },
+  { group: 'State & data', items: ['Redux Toolkit', 'TanStack Query', 'Context API', 'REST APIs', 'Nunjucks'] },
+  { group: 'Performance', items: ['Virtualisation', 'Web Workers', 'Code splitting', 'Canvas & Konva'] },
+  { group: 'Quality', items: ['Vitest', 'Testing Library', 'Playwright', 'axe-core', 'GitHub Actions'] },
+  { group: 'Design', items: ['Figma', 'Design systems', 'Accessible patterns', 'Highcharts'] },
+];
+
+// Work outside the frontend: what has shipped in a project, and what is still being learned.
+export const BEYOND = {
+  shipped: [
     {
-    id: 'hulk',
-    title: 'Hulk Fashion',
-    subtitle: 'E-Commerce Store',
-    desc: 'Fashion e-commerce platform with product catalog, shopping cart, wishlist management, and responsive design.',
-    image: '/images/hulkApp.png',
-    github: 'https://github.com/itsjxi/HulkApps23',
-    demo: 'https://hulkappecoomerce.netlify.app/',
-    tags: ['React', 'Redux', 'JavaScript'],
-    featured: false,
-    year: '2023',
-  },
-  {
-    id: 'quickkart',
-    title: 'QuickKart',
-    subtitle: 'Grocery Delivery Platform',
-    desc: 'Zepto-inspired grocery delivery web app built with MVC JavaScript architecture. Features real-time cart updates, product filtering, dynamic search, and optimized checkout flow.',
-    image: '/images/quickKart.png',
-    github: 'https://github.com/itsjxi/Zepto-Clone-As-Project',
-    demo: 'https://quickkart01.netlify.app/',
-    tags: ['JavaScript MVC', 'HTML5', 'CSS3', 'LocalStorage'],
-    featured: true,
-    year: '2023',
-  },
-  {
-    id: 'datagrid',
-    title: 'React DataGrid',
-    subtitle: 'Component Library',
-    desc: 'Reusable table grid component with pagination, inline editing, sorting, filtering, and dynamic page sizing. Built with MVC pattern for scalability and reusability.',
-    image: '/images/gridTable.png',
-    github: 'https://github.com/itsjxi/GridTable',
-    demo: 'https://gridtable2023.netlify.app/',
-    tags: ['React', 'JavaScript', 'MVC Pattern', 'CSS3'],
-    featured: true,
-    year: '2023',
-  },
-
-  {
-    id: 'chilflix',
-    title: 'ChilFlix',
-    subtitle: 'Movie Rating App',
-    desc: 'Movie rating application with interactive UI, watchlist feature, and smooth browsing experience.',
-    image: '/images/chilflix.png',
-    github: 'https://github.com/itsjxi/ChillFlix',
-    demo: 'https://chillflix2023.netlify.app/',
-    tags: ['React', 'Redux', 'JavaScript'],
-    featured: false,
-    year: '2023',
-  },
-];
-
-export const SKILLS = {
-  'Interface': ['React 18', 'TypeScript', 'JavaScript ES2024', 'HTML5', 'CSS3', 'Ant Design', 'Tailwind CSS'],
-  'State & Data': ['Redux Toolkit', 'Context API', 'RTK Query', 'Nunjucks', 'Handlebars'],
-  'Visualization': ['Highcharts', 'Chart.js', 'Konva', 'Canvas API', 'D3.js'],
-  'Tooling': ['Vite', 'Webpack', 'Git', 'Figma', 'Jira', 'CI/CD'],
+      title: 'Python and FastAPI',
+      project: 'FocusSpace API',
+      href: '#focusspace',
+      desc: 'Sign-up and sessions with hashed passwords, per-user data, aggregation endpoints for charts, and a one-click demo sandbox.',
+      tools: 'FastAPI, Pydantic, SQLite, pytest',
+    },
+    {
+      title: 'Scraping and data extraction',
+      project: 'Brand Guidelines Extractor',
+      href: 'https://github.com/itsjxi/brand-guidelines-extractor',
+      desc: 'Pulls colours, fonts, logos and social links from any website into a local database, with SSRF-safe fetching.',
+      tools: 'Requests, BeautifulSoup, SQLAlchemy',
+    },
+    {
+      title: 'Testing and CI',
+      project: 'Across all four projects',
+      href: '#work',
+      desc: 'Unit, API and end-to-end tests in every project, CI on GitHub Actions, and accessibility checks in the browser tests.',
+      tools: 'pytest, Vitest, Playwright, GitHub Actions',
+    },
+  ],
+  // A path: each step builds on the one before.
+  learning: [
+    { name: 'Python', note: 'Core language, OOP and FastAPI services, from a practice workspace to the FocusSpace API.' },
+    { name: 'SQL', note: 'Joins, indexes and migrations, while moving FocusSpace from SQLite to PostgreSQL.' },
+    {
+      name: 'AI engineering',
+      note: 'The backend side of the agents I build interfaces for.',
+      tags: ['Tool calling', 'RAG', 'Evals'],
+    },
+  ],
 };

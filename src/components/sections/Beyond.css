@@ -1,0 +1,153 @@
+.beyond {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.beyond-subhead {
+  margin: 0 0 14px;
+  padding-left: 4px;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 560;
+}
+
+.beyond-shipped ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.beyond-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm), 0 0 0 1px var(--line);
+}
+
+.beyond-title {
+  font-size: 17px;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+}
+
+.beyond-project {
+  align-self: flex-start;
+  margin-top: 4px;
+  color: var(--blue-deep);
+  font-size: 14px;
+  font-weight: 560;
+  text-decoration: none;
+}
+
+.beyond-project:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.beyond-desc {
+  margin-top: 12px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.beyond-tools {
+  margin-top: auto;
+  padding-top: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.beyond-learning ol {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+  border-radius: 24px;
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.beyond-learning ol > li {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  padding: 12px;
+}
+
+/* Connector between steps of the path */
+.beyond-learning ol > li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 30px;
+  bottom: -14px;
+  width: 2px;
+  border-radius: 1px;
+  background: rgba(74, 124, 243, 0.25);
+}
+
+.learning-dot {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 50%;
+  border: 2px solid var(--blue);
+  background: var(--surface);
+}
+
+.learning-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.learning-note {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+@media (max-width: 1080px) {
+  .beyond {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 760px) {
+  .beyond-shipped ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+.learning-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.learning-tags li {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--blue-soft);
+  color: var(--blue-deep);
+  font-size: 13px;
+  font-weight: 560;
+}

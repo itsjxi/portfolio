@@ -1,94 +1,71 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useId, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { EXPERIENCE } from '../../data/content.js';
-import { useReveal } from '../../hooks/useReveal.js';
 import './Experience.css';
 
-export default function Experience() {
-  const [active, setActive] = useState(0);
-  const ref = useReveal();
-  const current = EXPERIENCE[active];
+function WorkCard({ item }) {
+  return (
+    <li>
+      <p className="work-title">{item.title}</p>
+      <p className="work-desc">{item.desc}</p>
+      {item.metric && <p className="work-metric">{item.metric}</p>}
+    </li>
+  );
+}
+
+function Job({ job }) {
+  const [open, setOpen] = useState(false);
+  const moreId = useId();
 
   return (
-    <section id="experience" className="section exp-section">
-      <div ref={ref} className="reveal-up">
-        <p className="section-eyebrow">Career · 2021—Now</p>
-        <h2 className="section-title">From operations to AI-powered products</h2>
-        <p className="section-subtitle">
-          I turn complex workflows into useful tools—from manufacturing operations to enterprise marketing platforms.
-        </p>
+    <li className="job">
+      <div className="job-side">
+        <p className="job-company">{job.company}</p>
+        <p className="job-period">{job.period}</p>
       </div>
+      <div className="job-main">
+        <h3 className="job-role">{job.role}</h3>
+        <p className="job-summary">{job.summary}</p>
+        <ul className="job-work">
+          {job.work.map((w) => <WorkCard key={w.title} item={w} />)}
+        </ul>
 
-      <div className="exp-layout">
-        {/* Tabs */}
-        <div className="exp-tabs">
-          {EXPERIENCE.map((exp, i) => (
+        {job.more && (
+          <>
+            <ul id={moreId} className="job-work job-more" hidden={!open}>
+              {job.more.map((w) => <WorkCard key={w.title} item={w} />)}
+            </ul>
             <button
-              key={exp.id}
-              className={`exp-tab ${active === i ? 'active' : ''}`}
-              onClick={() => setActive(i)}
-              aria-pressed={active === i}
-              data-cursor
+              type="button"
+              className="more-toggle"
+              aria-expanded={open}
+              aria-controls={moreId}
+              onClick={() => setOpen((o) => !o)}
             >
-              <img src={exp.logo} alt={exp.company} className="exp-tab-logo" />
-              <div className="exp-tab-text">
-                <span className="exp-tab-company">{exp.company}</span>
-                <span className="exp-tab-role">{exp.role}</span>
-                <span className="exp-tab-period">{exp.period}</span>
-              </div>
-              {active === i && (
-                <motion.div className="exp-tab-bar" layoutId="exp-bar" transition={{ type: 'spring', stiffness: 400, damping: 30 }} />
-              )}
+              {open ? 'Show less' : `Also shipped (${job.more.length})`}
+              <ChevronDown size={16} strokeWidth={2.25} className="more-toggle-icon" aria-hidden="true" />
             </button>
-          ))}
-        </div>
+          </>
+        )}
 
-        {/* Content */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            className="exp-content"
-            role="region"
-            aria-label={`${current.company} experience`}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.35 }}
-          >
-            <div className="exp-content-header">
-              <div>
-                <p className="exp-companyline">
-                  {current.company}<span aria-hidden="true"> · </span>{current.period}
-                  <span className="exp-type">{current.type}</span>
-                </p>
-                <h3 className="exp-role">{current.role}</h3>
-                <p className="exp-summary">{current.summary}</p>
-              </div>
-              <div className="exp-stack">
-                {current.stack.map((t, i) => (
-                  <span key={i} className="chip">{t}</span>
-                ))}
-              </div>
-            </div>
-
-            <div className="exp-grid">
-              {current.work.map((item, i) => (
-                <div key={i} className="work-card">
-                  <span className="work-index">{String(i + 1).padStart(2, '0')}</span>
-                  <h4 className="work-title">{item.title}</h4>
-                  <p className="work-desc">{item.desc}</p>
-                  <div className="work-footer">
-                    <span className="work-metric">{item.metric}</span>
-                    <div className="work-tags">
-                      {item.tags.map((t, j) => <span key={j} className="tag">{t}</span>)}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+        <p className="job-stack">{job.stack}</p>
       </div>
+    </li>
+  );
+}
+
+export default function Experience() {
+  return (
+    <section id="experience" className="section page" aria-labelledby="experience-title">
+      <header className="section-head">
+        <h2 id="experience-title" className="section-title">Experience</h2>
+        <p className="section-lead">
+          From internal tools at a manufacturer to the AI features of a marketing platform.
+        </p>
+      </header>
+      <ol className="jobs">
+        {EXPERIENCE.map((job) => <Job key={job.company} job={job} />)}
+      </ol>
     </section>
   );
 }
